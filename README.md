@@ -132,7 +132,7 @@ Loading songs from data/songs.csv...
 Loaded songs: 20
 
 ============================================================
-  TOP 5 RECOMMENDATIONS
+  HIGH-ENERGY POP: TOP 5 RECOMMENDATIONS
   Profile: genre=pop, mood=happy, energy=0.8
 ============================================================
 

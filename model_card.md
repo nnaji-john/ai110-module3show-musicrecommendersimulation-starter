@@ -21,16 +21,20 @@ Prompts:
 
 ## 3. How the Model Works  
 
-Explain your scoring approach in simple language.  
+The recommender works like a judge giving points. The user describes what they like: a favorite genre, a favorite mood, how energetic they want the music to be (from 0 = very calm to 1 = very intense), and optionally whether they prefer acoustic or electronic sound.
 
-Prompts:  
+The system then looks at every song in the catalog, one at a time, and awards points:
 
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
+- **2 points** if the song is the user's favorite genre.
+- **1.5 points** if the song has the user's favorite mood.
+- **Up to 2 points** for energy, depending on how *close* the song's energy is to what the user wants. A song with exactly the right energy gets the full 2 points, and a song that is far off gets very few. This means a user who wants calm music is rewarded with calm songs, not just the loudest ones.
+- **Up to 1 point** for sound, if the user said whether they like acoustic music. Acoustic songs earn more for acoustic fans, and electronic songs earn more for everyone else.
 
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+After every song has a score, the system sorts them from highest to lowest and shows the top 5. Each recommendation comes with a list of reasons, such as "genre match" or "energy close to your target," and how many points each one was worth, so the user can see exactly why a song was picked.
+
+Genre is worth the most because getting the wrong genre usually feels like the biggest mistake. Mood comes next because it captures the feeling of a song in a way the numbers can't. Energy matters a lot too, and it decides the order once genre and mood stop matching.
+
+**Changes from the starter logic:** the starter code simply returned the first few songs in the file with no scoring. I replaced it with the point system above, added explanations for every score, and added a tie-breaker so the same profile always gets the same results in the same order.
 
 ---
 

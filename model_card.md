@@ -446,10 +446,30 @@ Other ideas: add more songs so every genre has several options, let users pick m
 
 ## 9. Personal Reflection  
 
-I learned that a recommender is really two steps: scoring each song, then ranking the list. Even a simple point system can give results that feel smart when the data is good.
+**Biggest learning moment**
 
-The biggest surprise was how much the data matters. Most of the problems I found didn't come from the math. They came from having only one or two songs per genre. Gym Hero kept showing up in lists where it didn't belong, just because it's one of the few loud songs.
+My biggest learning moment was the edge-case testing. Up to that point, every normal profile gave a good #1 song, so I thought the system worked. Then I typed "Pop" with a capital P, and the perfect match dropped to #2. An energy value of 1.5 gave a song negative points. Neither one caused an error. The program just quietly gave bad results. That taught me that "it runs" and "it works" are not the same thing. Testing only the happy path hides real problems.
 
-I was also surprised how easy it was to trick the system. Capital letters or an impossible energy value broke the results without any error.
+**How AI tools helped, and when I had to double-check**
 
-This changed how I think about apps like Spotify. When a weird song shows up in a recommendation list, it might not mean the app misunderstood the listener. It might just mean there wasn't a better match, or that the song was labeled in a way that happened to fit. Real apps also use what millions of other people listen to, which my content-only system can't do.  
+AI tools helped me move fast. They explained collaborative vs. content-based filtering, suggested the "closeness" formula for energy, wrote the CSV loading code, and suggested edge-case profiles I wouldn't have thought of. They also helped me format the terminal output and run comparisons across all my profiles at once.
+
+But I had to double-check them several times:
+- One AI-written sentence said a mood match could never beat a genre match. When I checked the math, that wasn't true.
+- A count of genres in my bias section was wrong (it said 14 of 15, but the real number was 16 of 17).
+- Some of the profile comparisons described the lists slightly wrong and had to be corrected against the real output.
+- The `python -m src.main` command didn't work at first because of how the files imported each other.
+
+The lesson: AI writes confident text, and confident text can still be wrong. I learned to check every number against the actual program output.
+
+**How simple algorithms still "feel" like recommendations**
+
+I was surprised how smart a few lines of math can feel. The system only adds up points for genre, mood, energy, and sound. But because each song shows the reasons behind its score, the results feel thought-out, almost like a friend explaining a pick. The flip side is that it can feel confident even when it's wrong. Gym Hero showed up for rock, sad, and EDM fans, and the explanation made it look reasonable, even though it was really there just because the catalog had so few loud songs. Most of the problems came from the data, not the math.
+
+**What I'd try next**
+
+- Fix the input bugs: compare labels in lowercase and keep energy between 0 and 1.
+- Give partial credit for related genres and moods, like rock and metal, or happy and playful.
+- Add a bright-vs-dark (valence) preference so happy songs stop showing up on dark lists.
+- Add more songs so every genre has several options.
+- Write automated tests for the edge cases, so these bugs can't come back unnoticed.
